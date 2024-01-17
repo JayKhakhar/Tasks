@@ -2,24 +2,18 @@ class Category:
     def __init__(self, name, code):
         self.name = name
         self.code = code
-        self.products = []
         self.no_of_products = 0
-
-    def add_product(self, product):
-        self.products.append(product)
-        self.no_of_products += 1
 
     def display_info(self):
         print(f"Category: {self.name}")
         print(f"Code: {self.code}")
         print(f"Number of Products: {self.no_of_products}\n")
 
-    def search_product_by_code(self, code):
-        for product in self.products:
-            if product.code == code:
+    def search_product_by_code(self, products, code):
+        for product in products:
+            if product.code == code and product.category == self:
                 return product
         return None
-
 
 class Product:
     def __init__(self, name, code, category, price):
@@ -27,13 +21,14 @@ class Product:
         self.code = code
         self.category = category
         self.price = price
-        category.add_product(self)
+        category.no_of_products += 1
 
     def display_info(self):
         print(f"Product: {self.name}")
         print(f"Code: {self.code}")
         print(f"Category: {self.category.name}")
         print(f"Price: ${self.price}")
+        print(f"no_of_products in category: {self.category.no_of_products}\n")
 
 def bubble_sort(products, reverse=False):
     n = len(products)
@@ -77,7 +72,7 @@ search_code = input("Enter the product code to search: ")
 
 found_product = None
 for category in [electronics_category, clothing_category, books_category]:
-    found_product = category.search_product_by_code(search_code)
+    found_product = category.search_product_by_code(products, search_code)
     if found_product:
         break
 
