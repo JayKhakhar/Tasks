@@ -3,12 +3,11 @@ class Category:
         self.name = name
         self.code = code
         self.products = []
+        self.no_of_products = 0
 
     def add_product(self, product):
         self.products.append(product)
-
-    def calculate_no_of_products(self):
-        self.no_of_products = len(self.products)
+        self.no_of_products += 1
 
     def display_info(self):
         print(f"Category: {self.name}")
@@ -20,6 +19,7 @@ class Category:
             if product.code == code:
                 return product
         return None
+
 
 class Product:
     def __init__(self, name, code, category, price):
@@ -34,13 +34,14 @@ class Product:
         print(f"Code: {self.code}")
         print(f"Category: {self.category.name}")
         print(f"Price: ${self.price}")
-        
+
 def bubble_sort(products, reverse=False):
     n = len(products)
     for i in range(n - 1):
         for j in range(0, n - i - 1):
             if (products[j].price < products[j + 1].price) if reverse else (products[j].price > products[j + 1].price):
                 products[j], products[j + 1] = products[j + 1], products[j]
+
 
 electronics_category = Category(name="Electronics", code="E001")
 clothing_category = Category(name="Clothing", code="C002")
@@ -58,9 +59,6 @@ products = [
     Product(name="Tablet", code="P009", category=electronics_category, price=150),
     Product(name="Hat", code="P010", category=clothing_category, price=10),
 ]
-
-for category in [electronics_category, clothing_category, books_category]:
-    category.calculate_no_of_products()
 
 for category in [electronics_category, clothing_category, books_category]:
     category.display_info()
