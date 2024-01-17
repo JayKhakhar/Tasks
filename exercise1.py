@@ -2,12 +2,13 @@ class Category:
     def __init__(self, name, code):
         self.name = name
         self.code = code
-        self.no_of_products = 0 
+        self.no_of_products = 0
 
     def display_info(self):
         print(f"Category: {self.name}")
         print(f"Code: {self.code}")
         print(f"Number of Products: {self.no_of_products}\n")
+
 
 class Product:
     def __init__(self, name, code, category, price):
@@ -20,7 +21,7 @@ class Product:
         print(f"Product: {self.name}")
         print(f"Code: {self.code}")
         print(f"Category: {self.category.name}")
-        print(f"Price: ${self.price}\n")
+        print(f"Price: ${self.price}")
 
 def bubble_sort(products, reverse=False):
     n = len(products)
@@ -44,6 +45,7 @@ products = [
     Product(name="Sweater", code="P008", category=clothing_category, price=30),
     Product(name="Tablet", code="P009", category=electronics_category, price=150),
     Product(name="Hat", code="P010", category=clothing_category, price=10),
+    #Product(name="Book3",code="P011",category=books_category,price=12),
 ]
 
 for product in products:
@@ -74,4 +76,3 @@ if found_product:
     found_product.display_info()
 else:
     print("\nProduct not found.")
-
