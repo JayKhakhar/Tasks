@@ -2,12 +2,24 @@ class Category:
     def __init__(self, name, code):
         self.name = name
         self.code = code
-        self.no_of_products = 0
+        self.products = []
+
+    def add_product(self, product):
+        self.products.append(product)
+
+    def calculate_no_of_products(self):
+        self.no_of_products = len(self.products)
 
     def display_info(self):
         print(f"Category: {self.name}")
         print(f"Code: {self.code}")
         print(f"Number of Products: {self.no_of_products}\n")
+
+    def search_product_by_code(self, code):
+        for product in self.products:
+            if product.code == code:
+                return product
+        return None
 
 
 class Product:
@@ -16,12 +28,15 @@ class Product:
         self.code = code
         self.category = category
         self.price = price
+        category.add_product(self)
 
     def display_info(self):
         print(f"Product: {self.name}")
         print(f"Code: {self.code}")
         print(f"Category: {self.category.name}")
         print(f"Price: ${self.price}")
+        print(f"Count: {self.category.no_of_products}\n")
+
 
 def bubble_sort(products, reverse=False):
     n = len(products)
@@ -29,6 +44,7 @@ def bubble_sort(products, reverse=False):
         for j in range(0, n - i - 1):
             if (products[j].price < products[j + 1].price) if reverse else (products[j].price > products[j + 1].price):
                 products[j], products[j + 1] = products[j + 1], products[j]
+
 
 electronics_category = Category(name="Electronics", code="E001")
 clothing_category = Category(name="Clothing", code="C002")
@@ -45,11 +61,10 @@ products = [
     Product(name="Sweater", code="P008", category=clothing_category, price=30),
     Product(name="Tablet", code="P009", category=electronics_category, price=150),
     Product(name="Hat", code="P010", category=clothing_category, price=10),
-    #Product(name="Book3",code="P011",category=books_category,price=12),
 ]
 
-for product in products:
-    product.category.no_of_products += 1
+for category in [electronics_category, clothing_category, books_category]:
+    category.calculate_no_of_products()
 
 for category in [electronics_category, clothing_category, books_category]:
     category.display_info()
@@ -65,10 +80,11 @@ for product in products:
     product.display_info()
 
 search_code = input("Enter the product code to search: ")
+
 found_product = None
-for product in products:
-    if product.code == search_code:
-        found_product = product
+for category in [electronics_category, clothing_category, books_category]:
+    found_product = category.search_product_by_code(search_code)
+    if found_product:
         break
 
 if found_product:
