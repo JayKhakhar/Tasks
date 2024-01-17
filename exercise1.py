@@ -21,7 +21,6 @@ class Category:
                 return product
         return None
 
-
 class Product:
     def __init__(self, name, code, category, price):
         self.name = name
@@ -35,16 +34,13 @@ class Product:
         print(f"Code: {self.code}")
         print(f"Category: {self.category.name}")
         print(f"Price: ${self.price}")
-        print(f"Count: {self.category.no_of_products}\n")
-
-
+        
 def bubble_sort(products, reverse=False):
     n = len(products)
     for i in range(n - 1):
         for j in range(0, n - i - 1):
             if (products[j].price < products[j + 1].price) if reverse else (products[j].price > products[j + 1].price):
                 products[j], products[j + 1] = products[j + 1], products[j]
-
 
 electronics_category = Category(name="Electronics", code="E001")
 clothing_category = Category(name="Clothing", code="C002")
