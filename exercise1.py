@@ -1,9 +1,13 @@
 class Category:
-    def __init__(self, name, code, no_of_products):
+    def __init__(self, name, code):
         self.name = name
         self.code = code
-        self.no_of_products = no_of_products
+        self.no_of_products = 0 
 
+    def display_info(self):
+        print(f"Category: {self.name}")
+        print(f"Code: {self.code}")
+        print(f"Number of Products: {self.no_of_products}\n")
 
 class Product:
     def __init__(self, name, code, category, price):
@@ -12,87 +16,62 @@ class Product:
         self.category = category
         self.price = price
 
+    def display_info(self):
+        print(f"Product: {self.name}")
+        print(f"Code: {self.code}")
+        print(f"Category: {self.category.name}")
+        print(f"Price: ${self.price}\n")
 
-def find_min_price(products):
-    if not products:
-        return None
-    min_price_product = products[0]
-    for product in products:
-        if product.price < min_price_product.price:
-            min_price_product = product
-    return min_price_product
+def bubble_sort(products, reverse=False):
+    n = len(products)
+    for i in range(n - 1):
+        for j in range(0, n - i - 1):
+            if (products[j].price < products[j + 1].price) if reverse else (products[j].price > products[j + 1].price):
+                products[j], products[j + 1] = products[j + 1], products[j]
 
+electronics_category = Category(name="Electronics", code="E001")
+clothing_category = Category(name="Clothing", code="C002")
+books_category = Category(name="Books", code="B003")
 
-def sort_by_price(products):
-    sorted_products = []
-    while products:
-        min_price_product = find_min_price(products)
-        sorted_products.append(min_price_product)
-        products.remove(min_price_product)
-    return sorted_products
+products = [
+    Product(name="Laptop", code="P001", category=electronics_category, price=1200),
+    Product(name="T-shirt", code="P002", category=clothing_category, price=25),
+    Product(name="Smartphone", code="P003", category=electronics_category, price=800),
+    Product(name="Jeans", code="P004", category=clothing_category, price=40),
+    Product(name="Book1", code="P005", category=books_category, price=15),
+    Product(name="Book2", code="P006", category=books_category, price=20),
+    Product(name="Camera", code="P007", category=electronics_category, price=300),
+    Product(name="Sweater", code="P008", category=clothing_category, price=30),
+    Product(name="Tablet", code="P009", category=electronics_category, price=150),
+    Product(name="Hat", code="P010", category=clothing_category, price=10),
+]
 
+for product in products:
+    product.category.no_of_products += 1
 
-def search_product_by_code(products, search_code):
-    for product in products:
-        if product.code == search_code:
-            return product
-    return None
+for category in [electronics_category, clothing_category, books_category]:
+    category.display_info()
 
+bubble_sort(products, reverse=True)
+print("Products Sorted by Price (High to Low):")
+for product in products:
+    product.display_info()
 
-
-categories = []
-num_categories = int(input("Enter the number of categories: "))
-for i in range(1, num_categories + 1):
-    name = input(f"Enter the name of category {i}: ")
-    code = input(f"Enter the code of category {i}: ")
-    no_of_products = int(input(f"Enter the number of products in category {i}: "))
-    categories.append(Category(name, code, no_of_products))
-
-
-products = []
-for category in categories:
-    for i in range(1, category.no_of_products + 1):
-        name = input(f"Enter the name of product {i} in category {category.name}: ")
-        code = input(f"Enter the code of product {i} in category {category.name}: ")
-        price = float(input(f"Enter the price of product {i} in category {category.name}: "))
-        products.append(Product(name, code, category.name, price))
-
-
-for category in categories:
-    print(f"Category: {category.name}")
-    print(f"Code: {category.code}")
-    print(f"Number of Products: {category.no_of_products}")
-
-
-# Sorting products based on price (Low to High) without using sort or sorted
-print("Products sorted by price (Low to High):")
-sorted_low_to_high = sort_by_price(products.copy())
-for product in sorted_low_to_high:
-    print(f"Name: {product.name}")
-    print(f"Code: {product.code}")
-    print(f"Category: {product.category}")
-    print(f"Price: ${product.price}")
-
-
-
-print("Products sorted by price (High to Low):")
-sorted_high_to_low = sort_by_price(products.copy())
-sorted_high_to_low.reverse()  # Reverse the list for High to Low
-for product in sorted_high_to_low:
-    print(f"Name: {product.name}")
-    print(f"Code: {product.code}")
-    print(f"Category: {product.category}")
-    print(f"Price: ${product.price}")
-
-
+bubble_sort(products)
+print("Products Sorted by Price (Low to High):")
+for product in products:
+    product.display_info()
 
 search_code = input("Enter the product code to search: ")
-found_product = search_product_by_code(products, search_code)
+found_product = None
+for product in products:
+    if product.code == search_code:
+        found_product = product
+        break
 
 if found_product:
-    print(f"Product with code {search_code} found:")
-    print(f"Name: {found_product.name}")
-    print(f"Category: {found_product.category}")
-    print(f"Price: ${found_product.price}")
+    print("\nProduct Found:")
+    found_product.display_info()
 else:
-    print(f"Product with code {search_code} not found.")
+    print("\nProduct not found.")
+
