@@ -4,15 +4,13 @@ class Category:
         self.display_name = ""
         self.products = []
 
-    def add_product(self, product):
-        self.products.append(product)
-
-    def generate_display_name(self):
         if self.parent:
-            self.parent.generate_display_name()
             self.display_name = f"{self.parent.display_name} > {self.name}"
         else:
             self.display_name = self.name
+
+    def add_product(self, product):
+        self.products.append(product)
 
     def display_info(self):
         print(f"\nCategory: {self.display_name}\nCode: {self.code}\nProducts:")
@@ -21,9 +19,6 @@ class Category:
         else:
             for product in self.products:
                 product.display_info()
-
-    def get_category_chain(self):
-        return [self.display_name] + (self.parent.get_category_chain() if self.parent else [])
 
     def add_products_recursive(self, products):
         def add_to_category(category, products):
@@ -49,10 +44,6 @@ car_category = Category("Car", "C001", vehicle_category)
 petrol_category = Category("Petrol", "P001", car_category)
 diesel_category = Category("Diesel", "D001", car_category)
 bike_category = Category("Bike", "B001", vehicle_category)
-
-# Generating display names for categories
-for category in [vehicle_category, car_category, petrol_category, diesel_category, bike_category]:
-    category.generate_display_name()
 
 # Creating static product objects
 products_vehicle = [Product(f"Product{num}", f"VP{num + 1:03}") for num in range(3)]
