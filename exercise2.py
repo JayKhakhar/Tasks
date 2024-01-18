@@ -1,51 +1,61 @@
-class Category:
+class VehicleCategory:
     def __init__(self, name, code, parent=None):
         self.name = name
         self.code = code
         self.parent = parent
-        self.display_name = self.generate_display_name()
-        self.products = [self.create_product() for i in range(3)]
+        self.products = []
 
-    def generate_display_name(self):
-        if self.parent is None:
-            return self.name
-        else:
-            return f"{self.parent.generate_display_name()} > {self.name}"
+    def add_product(self, product):
+        self.products.append(product)
 
-    def create_product(self):
-        product_name = input(f"Enter the product name for {self.name}: ")
-        product_code = input(f"Enter the product code for {self.name}: ")
-        product_price = float(input(f"Enter the product price for {self.name}: "))
-        return Product(product_name, product_code, product_price)
+    def display_info(self):
+        category_chain = self.get_category_chain()
+        print(f"Category: {category_chain}")
+        print(f"Code: {self.code}")
+        print("\nProduct Details:")
+        for product in self.products:
+            product.display_info()
 
-class Product:
-    def __init__(self, name, code, price):
+    def get_category_chain(self):
+        if self.parent:
+            return f"{self.parent.get_category_chain()} > {self.name}"
+        return self.name
+
+class VehicleProduct:
+    def __init__(self, name, code):
         self.name = name
         self.code = code
-        self.price = price
 
-vehicle = Category("Vehicle", "V001")
-car = Category("Car", "C005", parent=vehicle)
-petrol = Category("Petrol", "P004", parent=car)
+    def display_info(self):
+        print(f"Product: {self.name}")
+        print(f"Code: {self.code}\n")
 
-category1 = Category("Category1", "C001", parent=vehicle)
-category2 = Category("Category2", "C002", parent=category1)
-category3 = Category("Category3", "C003", parent=category1)
-category4 = Category("Category4", "C004", parent=category3)
-category5 = Category("Category5", "C005", parent=category3)
+vehicle_category = VehicleCategory(name="Vehicle", code="V001")
+car_category = VehicleCategory(name="Car", code="C001", parent=vehicle_category)
+bike_category = VehicleCategory(name="Bike", code="B001", parent=vehicle_category)
+diesel_car_category = VehicleCategory(name="Diesel Car", code="DC001", parent=car_category)
+petrol_car_category = VehicleCategory(name="Petrol Car", code="PC001", parent=car_category)
 
-def display_category(category):
-    print(f"\nCategory: {category.name}")
-    print(f"Code: {category.code}")
-    print(f"Display Name: {category.display_name}")
-    print("Product Details:")
-    for product in category.products:
-        print(f"  Product: {product.name}")
-        print(f"    Code: {product.code}")
-        print(f"    Price: ${product.price}")
+products_vehicle = [VehicleProduct(f"Vehicle Product {i+1}", f"VP00{i+1}") for i in range(3)]
+products_car = [VehicleProduct(f"Car Product {i+1}", f"CP00{i+1}") for i in range(3)]
+products_bike = [VehicleProduct(f"Bike Product {i+1}", f"BP00{i+1}") for i in range(3)]
+products_diesel_car = [VehicleProduct(f"Diesel Car Product {i+1}", f"DCP00{i+1}") for i in range(3)]
+products_petrol_car = [VehicleProduct(f"Petrol Car Product {i+1}", f"PCP00{i+1}") for i in range(3)]
 
-categories = [vehicle, car, petrol, category1, category2, category3, category4, category5]
-categories.sort(key=lambda x: x.display_name)
+for product in products_vehicle:
+    vehicle_category.add_product(product)
 
-for category in categories:
-    display_category(category)
+for product in products_car:
+    car_category.add_product(product)
+
+for product in products_bike:
+    bike_category.add_product(product)
+
+for product in products_diesel_car:
+    diesel_car_category.add_product(product)
+
+for product in products_petrol_car:
+    petrol_car_category.add_product(product)
+
+for category in [vehicle_category, car_category, bike_category, diesel_car_category, petrol_car_category]:
+    category.display_info()
