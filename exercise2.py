@@ -15,7 +15,7 @@ class VehicleCategory:
         print("\nProduct Details:")
         for product in self.products:
             product.display_info()
-
+        
     def get_category_chain(self):
         if self.parent:
             return f"{self.parent.get_category_chain()} > {self.name}"
@@ -36,11 +36,11 @@ bike_category = VehicleCategory(name="Bike", code="B001", parent=vehicle_categor
 diesel_car_category = VehicleCategory(name="Diesel Car", code="DC001", parent=car_category)
 petrol_car_category = VehicleCategory(name="Petrol Car", code="PC001", parent=car_category)
 
-products_vehicle = [VehicleProduct(f"Vehicle Product {i+1}", f"VP00{i+1}") for i in range(3)]
-products_car = [VehicleProduct(f"Car Product {i+1}", f"CP00{i+1}") for i in range(3)]
-products_bike = [VehicleProduct(f"Bike Product {i+1}", f"BP00{i+1}") for i in range(3)]
-products_diesel_car = [VehicleProduct(f"Diesel Car Product {i+1}", f"DCP00{i+1}") for i in range(3)]
-products_petrol_car = [VehicleProduct(f"Petrol Car Product {i+1}", f"PCP00{i+1}") for i in range(3)]
+products_vehicle = [VehicleProduct("Vehicle Product", f"VP00{i}") for i in range(3)]
+products_car = [VehicleProduct("Car Product", f"CP00{i}") for i in range(3)]
+products_bike = [VehicleProduct("Bike Product", f"BP00{i}") for i in range(3)]
+products_diesel_car = [VehicleProduct("Diesel Car Product", f"DCP00{i}") for i in range(3)]
+products_petrol_car = [VehicleProduct("Petrol Car Product", f"PCP00{i}") for i in range(3)]
 
 for product in products_vehicle:
     vehicle_category.add_product(product)
