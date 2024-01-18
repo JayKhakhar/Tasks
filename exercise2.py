@@ -56,14 +56,16 @@ for category in [vehicle_category, car_category, petrol_category, diesel_categor
 # Creating static product objects
 products_vehicle = [Product(f"Product{num}", f"VP{num + 1:03}") for num in range(3)]
 products_car = [Product(f"Product{num}", f"CP{num + 1:03}") for num in range(3)]
-products_petrol = [Product(f"Product{num}", f"PP{num + 1:03}") for num in range(2)]
-products_diesel = [Product(f"Product{num}", f"DP{num + 1:03}") for num in range(2)]
+products_petrol = [Product(f"Product{num}", f"PP{num + 1:03}") for num in range(3)]
+products_diesel = [Product(f"Product{num}", f"DP{num + 1:03}") for num in range(3)]
+products_bike = [Product(f"Product{num}", f"BP{num + 1:03}") for num in range(3)]
 
 # Adding static products to respective categories using recursion
 vehicle_category.add_products_recursive(products_vehicle)
 car_category.add_products_recursive(products_car)
 petrol_category.add_products_recursive(products_petrol)
 diesel_category.add_products_recursive(products_diesel)
+bike_category.add_products_recursive(products_bike)
 
 # Displaying product list by category (group by category, order by category name)
 categories = [vehicle_category, car_category, petrol_category, diesel_category, bike_category]
